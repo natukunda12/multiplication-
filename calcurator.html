@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+       
+    fieldset { 
+        text-align: center;
+        margin: 20px auto; 
+        padding: 15px;
+        max-width: 500px; 
+        border: 2px solid rgb(15, 11, 4);
+        background-color: rgb(40, 31, 163);
+        border-radius: 20px;
+        box-sizing: border-box;
+    }
+    
+    .calculator {
+        text-align: center;
+        margin: 20px auto;
+        width: 100%;
+    }
+    
+    .result {
+        padding: 15px;
+        background-color: rgb(250, 250, 250);
+        border-radius: 30px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        margin-bottom: 15px;
+        min-height: 30px;
+        font-size: 24px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .button {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        padding: 0 10px;
+    }
+    
+    input[type="button"] {
+        font-size: 15px;
+        color: rgb(9, 17, 17);
+        padding: 8px 0;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        
+    }
+    
+    .cancel {
+        background-color: red;
+        color: white;
+    }
+    
+    .equal {
+        background-color: green;
+        color: white;
+        
+    }
+    
+    .operator {
+        background-color: #ff9500;
+        color: white;
+    }
+    
+    a {
+        text-decoration: none;
+        color: black;
+        font-size: 20px;
+        
+        margin-top: 15px;
+    }
+    a:hover{
+        background-color: aqua;
+        color: #000;
+    }
+    marquee h1 {
+        font-size: 1.5rem; 
+    }
+    
+    
+    @media (max-width: 600px) {
+        fieldset {
+            margin: 10px;
+            border-radius: 15px;
+        }
+        
+        .result {
+            padding: 10px;
+            font-size: 20px;
+        }
+        
+        input[type="button"] {
+            font-size: 16px;
+            padding: 10px 0;
+        }
+        
+        a {
+            font-size: 18px;
+        }
+    }
+    
+    @media (max-width: 400px) {
+        marquee h1 {
+            font-size: 1.2rem;
+        }
+        
+        input[type="button"] {
+            font-size: 14px;
+        }
+    }
+</style>
+    
+</head>
+<body>
+    <fieldset><marquee behavior="" direction="right"><h1><strong><i style="color: aliceblue;">THIS IS OUR CALCULATOR</i></strong></h1></marquee>
+        <div class="calculator">
+            <div class="result">
+                <div class="display" id="display">0</div>
+            </div>
+            <br>
+            <div class="button">
+                <input type="button" value="7" onclick="appendToDisplay('7')">
+                <input type="button" value="8" onclick="appendToDisplay('8')">
+                <input type="button" value="9" onclick="appendToDisplay('9')">
+                <input type="button" value="/" onclick="appendToDisplay('/')" class="operator"><br><br>
+                <input type="button" value="4" onclick="appendToDisplay('4')">
+                <input type="button" value="5" onclick="appendToDisplay('5')">
+                <input type="button" value="6" onclick="appendToDisplay('6')">
+                <input type="button" value="*" onclick="appendToDisplay('*')" class="operator"><br><br>
+                <input type="button" value="1" onclick="appendToDisplay('1')">
+                <input type="button" value="2" onclick="appendToDisplay('2')">
+                <input type="button" value="3" onclick="appendToDisplay('3')">
+                <input type="button" value="-" onclick="appendToDisplay('-')" class="operator"><br><br>
+                <input type="button" value="0" onclick="appendToDisplay('0')">
+                <input type="button" value="C" onclick="clearDisplay()" class="cancel">
+                <input type="button" value="=" onclick="calculate()" class="equal">
+                <input type="button" value="+" onclick="appendToDisplay('+')" class="operator">
+            </div>
+        </div>
+        <li><a href="multiplication.html">back</a></li>
+    </fieldset>
+    <script>
+        let currentDisplay = '0';
+        const display = document.getElementById('display');
+        
+        function updateDisplay() {
+            display.textContent = currentDisplay;
+        }
+        
+        function appendToDisplay(value) {
+           
+            if (value === '.' && currentDisplay.includes('.') && 
+                !['+','-','*','/'].some(op => currentDisplay.includes(op))) {
+                return;
+            }
+            
+            
+            if (['+','-','*','/'].includes(value)) {
+                
+                if (currentDisplay === '0' && value !== '-') return;
+                
+             
+                const lastChar = currentDisplay.slice(-1);
+                if (['+','-','*','/'].includes(lastChar)) {
+                    currentDisplay = currentDisplay.slice(0, -1) + value;
+                    updateDisplay();
+                    return;
+                }
+            }
+            
+            if (currentDisplay === '0' && value !== '.') {
+                currentDisplay = value;
+            } else {
+                currentDisplay += value;
+            }
+            updateDisplay();
+        }
+        
+        function clearDisplay() {
+            currentDisplay = '0';
+            updateDisplay();
+        }
+        
+        function calculate() {
+            try {
+               
+                if (['+','-','*','/'].includes(currentDisplay.slice(-1))) {
+                    currentDisplay = currentDisplay.slice(0, -1);
+                }
+                
+                if (currentDisplay === '') {
+                    currentDisplay = '0';
+                } else {
+                    
+                    currentDisplay = new Function('return ' + currentDisplay)().toString();
+                }
+            } catch (error) {
+                currentDisplay = 'Error';
+            }
+            updateDisplay();
+        }
+        updateDisplay();
+    </script>
+</body>
+</html>

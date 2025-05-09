@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplication Table Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #6156ff;
+
+        }
+        .body{
+            width: 700px;
+            text-align: center;
+            height: auto;
+            background-color: #e9f7ef;
+            border-radius: 22px;
+
+        }
+        
+        h1 {
+            color: #000000;
+            text-align: center;
+        }
+        
+       
+        .section {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;}
+        
+        .section h2 {
+            margin-top: 0;
+            color: #160c0c;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        input {
+            padding: 20px ;
+            border-radius: 12px;
+        }
+        
+        
+        
+        
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #0c7c3c;
+            border-radius: 5px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }result{
+            
+            padding: 30px 450px 30px 250px;
+            background-color: aliceblue;
+            border-radius: 30px;
+            box-shadow: 20px 0 -20px 0;
+        }
+        a{
+            text-decoration: none;
+         
+
+        }
+        a:hover{
+            background-color: #45a049;
+        }
+        @media screen and(max-width=400)and (max-height=200){
+            fieldset{
+                height: auto;
+                width: 20px;
+                font-size: 10px;
+                right: 0px;
+                margin-right: 2px;
+            }
+        }
+        @media screen and(max-width=1000)and (max-height=1028){
+            fieldset{
+                height: auto;
+                width: 20px;
+                font-size: 10px;
+                right: 0px;
+                margin-right: 2px;
+            }}
+    </style>
+</head>
+<body><fieldset class="body">>
+    <marquee behavior="" direction="top-right"><h1><strong><i style="color: rgb(50, 207, 77);">THIS IS OUR PROJECT</i></strong></h1></marquee>
+    <h1>Multiplication Table Generator</h1>
+    
+    <div class="section">
+        <h2>Single Number</h2>
+        
+            <input type="number" id="single-number" placeholder="Enter a number">
+        <button id="generate-single">Generate</button>
+        <div id="single-result" class="result"style="display: none;"></div>
+    </div>
+        <h2>Range</h2>
+            <input type="number" id="start-number" placeholder="Start number">
+            <input type="number" id="end-number" placeholder="End number">
+     
+        <button id="generate-range">Generate</button>
+        <div id="range-result" class="result" ></div><li class="link"><a href="calcurator.html">continue</a></li></fieldset>
+       
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('generate-single').addEventListener('click', function() {
+                const number = parseInt(document.getElementById('single-number').value);
+                const resultDiv = document.getElementById('single-result');
+                
+                if (isNaN(number)) {
+                    resultDiv.innerHTML = '<p>Please enter a valid number</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                let tableHTML = `<h3>Multiplication Table for ${number}</h3><table>`;
+                tableHTML += '<tr><th>Multiplier</th><th>Result</th></tr>';
+                
+                for (let i = 1; i <= 12; i++) {
+                    tableHTML += `<tr><td>${number} × ${i}</td><td>${number * i}</td></tr>`;
+                }
+                
+                tableHTML += '</table>';
+                resultDiv.innerHTML = tableHTML;
+                resultDiv.style.display = 'block';
+            });
+            document.getElementById('generate-range').addEventListener('click', function() {
+                const start = parseInt(document.getElementById('start-number').value);
+                const end = parseInt(document.getElementById('end-number').value);
+                const resultDiv = document.getElementById('range-result');
+                
+                if (isNaN(start) || isNaN(end)) {
+                    resultDiv.innerHTML = '<p>Please enter valid start and end numbers</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                if (start > end) {
+                    resultDiv.innerHTML = '<p>Start number must be less than or equal to end number</p>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+                
+                let tableHTML = `<h3>Multiplication Tables from ${start} to ${end}</h3><table>`;
+                tableHTML += '<tr><th>Number</th>';
+        
+                for (let i = 1; i <= 12; i++) {
+                    tableHTML += `<th>× ${i}</th>`;
+                }
+                tableHTML += '</tr>';
+                for (let num = start; num <= end; num++) {
+                    tableHTML += `<tr><td><strong>${num}</strong></td>`;
+                    for (let i = 1; i <= 12; i++) {
+                        tableHTML += `<td>${num * i}</td>`;
+                    }
+                    tableHTML += '</tr>';
+                }
+                
+                tableHTML += '</table>';
+                resultDiv.innerHTML = tableHTML;
+                resultDiv.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
